@@ -13,7 +13,8 @@ export const createTrainer = async (name: string, userId: string) => {
         _id: trainerId,
         name,
         team: [],
-        pc: []
+        pc: [],
+        ownwer: myuserId
     };
 
     await db.collection<trainer>(trainer_col).insertOne(newTrainer);
@@ -26,4 +27,14 @@ export const createTrainer = async (name: string, userId: string) => {
     );
 
     return newTrainer
+}
+
+export const loginTrainer = async (name: string, userId: string) => {
+    const db = getDB()
+    const myuserId = new ObjectId(userId)
+
+    const trainer = await db.collection<trainer>(trainer_col).findOne({name: name, ownwer: myuserId})
+    if (!trainer) throw new Error ("No tienes creado un entrenador.")
+    
+    return trainer
 }

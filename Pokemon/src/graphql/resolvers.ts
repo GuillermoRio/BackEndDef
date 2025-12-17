@@ -2,7 +2,7 @@ import { IResolvers } from "@graphql-tools/utils";
 import { getDB } from "../db/mongo";
 import { createUser, validateUser } from "../collections/users";
 import { signToken } from "../auth";
-import { createTrainer } from "../collections/trainer";
+import { createTrainer, loginTrainer } from "../collections/trainer";
 
 
 const db = getDB()
@@ -29,6 +29,15 @@ export const resolvers: IResolvers = {
             try{
                 if (!user) throw new Error("No puedes crear un entrenador si no tienes cuenta.")
                 const trainer = await createTrainer(name, user._id.toString())  
+                return trainer
+            }catch(error){
+                return error
+            }
+        },
+        loginUserTrainer: async (_, {name}, {user}) => {
+            try{
+                if (!user) throw new Error("No puedes elegir un entrenador si no tienes cuenta.")
+                const trainer = await loginTrainer(name, user._id.toString())  
                 return trainer
             }catch(error){
                 return error

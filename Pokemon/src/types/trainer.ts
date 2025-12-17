@@ -4,5 +4,6 @@ export type trainer = {
     _id: ObjectId,
     name: string,
     team: ObjectId[],
-    pc: ObjectId[]
+    pc: ObjectId[],
+    ownwer: ObjectId
 }
