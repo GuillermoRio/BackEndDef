@@ -3,9 +3,13 @@ import { getDB } from "../db/mongo";
 import { createUser, validateUser } from "../collections/users";
 import { signToken } from "../auth";
 import { createTrainer, loginTrainer } from "../collections/trainer";
+import { Habilities } from "../types/habilities";
+import { habilities_col } from "../utils";
+import { ObjectId } from "mongodb";
+import { createHability } from "../collections/habilities";
+import { createAttack } from "../collections/attacks";
+import { createPok } from "../collections/pokemons";
 
-
-const db = getDB()
 
 export const resolvers: IResolvers = {
     Mutation : {
@@ -42,7 +46,29 @@ export const resolvers: IResolvers = {
             }catch(error){
                 return error
             }
-        }
+        },
+        createHability: async (_, {input}) => {
+            try{
+                return createHability(input)
+            }catch(error){
+                return error
+            }
+        },
+        createAttack: async (_, {input}) => {
+            try{
+                return createAttack(input)
+            }catch(error){
+                return error
+            }
+        },
+        createPokemon: async (_, {input}) => {
+            try{
+                return createPok(input)
+            }catch(error){
+                return error
+            }
+        }   
+
     },
     Query: {
         me: async (_, __, { user }) => {

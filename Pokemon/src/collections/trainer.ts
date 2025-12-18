@@ -8,7 +8,9 @@ export const createTrainer = async (name: string, userId: string) => {
     const db = getDB()
     const myuserId = new ObjectId(userId);
     const trainerId = new ObjectId()
-
+    const repTrainer = await db.collection<trainer>(trainer_col).findOne({name})
+    if (repTrainer) throw new Error ("No puedes crear a dos entrenadores con el mismo nombre.")
+        
     const newTrainer: trainer = {
         _id: trainerId,
         name,
